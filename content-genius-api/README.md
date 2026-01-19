@@ -1,4 +1,4 @@
-# 🚀 ContentGenius API
+#  ContentGenius API
 
 **API SaaS de génération de contenu intelligent propulsée par ChatGPT**
 
@@ -21,7 +21,7 @@ ContentGenius est une API backend SaaS conçue pour aider les créateurs de cont
 
 ---
 
-## ✨ Fonctionnalités
+##  Fonctionnalités
 
 ### Fonctionnalités utilisant ChatGPT (5)
 
@@ -37,10 +37,10 @@ ContentGenius est une API backend SaaS conçue pour aider les créateurs de cont
 
 | Fonctionnalité            | Description                                      |
 | ------------------------- | ------------------------------------------------ |
-| 🔐 **Authentification**   | Inscription, connexion, gestion tokens (Sanctum) |
-| 👤 **Gestion du profil**  | Voir/modifier profil, consulter crédits          |
-| 📜 **Historique**         | Consulter tous les contenus générés              |
-| 💳 **Système de crédits** | Gestion des quotas utilisateurs                  |
+|    **Authentification**   | Inscription, connexion, gestion tokens (Sanctum) |
+|    **Gestion du profil**  | Voir/modifier profil, consulter crédits          |
+|    **Historique**         | Consulter tous les contenus générés              |
+|    **Système de crédits** | Gestion des quotas utilisateurs                  |
 
 ---
 
@@ -108,7 +108,7 @@ app/
 
 ```bash
 # Cloner le repository
-git clone https://github.com/votre-username/content-genius-api.git
+git clone https://git@github.com:Romanuis/Test-NerdX-Digital.git
 cd content-genius-api
 
 # Installer les dépendances
@@ -224,11 +224,11 @@ http://localhost:8000/api/v1
 ### 1. Inscription
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/auth/register \
+curl -X POST http://http://127.0.0.1:8000/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "John Doe",
-    "email": "john@example.com",
+    "name": "Roma King",
+    "email": "test@test.com",
     "password": "password123",
     "password_confirmation": "password123"
   }'
@@ -243,8 +243,8 @@ curl -X POST http://localhost:8000/api/v1/auth/register \
     "data": {
         "user": {
             "id": 1,
-            "name": "John Doe",
-            "email": "john@example.com",
+            "name": "Roma King",
+            "email": "test@test.com",
             "credits": 100,
             "total_generations": 0
         },
@@ -516,8 +516,6 @@ MIT License - Voir [LICENSE](LICENSE) pour plus de détails.
 
 ## 👤 Auteur
 
-Développé dans le cadre d'un test technique - API SaaS Laravel + ChatGPT
+Développé par Romanuis dans le cadre d'un test technique - API SaaS Laravel + ChatGPT
 
 ---
-
-**⭐ N'hésitez pas à star ce repo si vous l'avez trouvé utile!**
