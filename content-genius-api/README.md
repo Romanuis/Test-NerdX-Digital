@@ -487,28 +487,7 @@ Schema::create('content_generations', function (Blueprint $table) {
     $table->timestamp('processed_at')->nullable();
     $table->timestamps();
 });
-```
 
-> "J'ai développé **ContentGenius**, une API SaaS de génération de contenu propulsée par ChatGPT. L'architecture respecte les bonnes pratiques Laravel avec:
->
-> - Des **Controllers légers** qui délèguent aux Services
-> - Toute la **logique métier isolée dans des Services**
-> - Les **appels OpenAI exécutés via des Jobs** pour ne pas bloquer les requêtes
-> - Un **système de crédits** pour la monétisation
-> - Des **réponses JSON standardisées** via un Trait réutilisable
-> - L'**authentification via Sanctum** pour la sécurité API
->
-> L'API expose 5 fonctionnalités ChatGPT (articles, réécriture, résumés, emails, traductions) et 4 fonctionnalités annexes (auth, profil, historique, crédits).
->
-> Le projet est conçu pour être scalable et production-ready."
-
----
-
-## 📄 Licence
-
-MIT License - Voir [LICENSE](LICENSE) pour plus de détails.
-
----
 
 ## 👤 Auteur
 
