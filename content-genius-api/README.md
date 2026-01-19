@@ -489,10 +489,6 @@ Schema::create('content_generations', function (Blueprint $table) {
 });
 ```
 
----
-
-## 🎤 Comment présenter ce projet au recruteur
-
 > "J'ai développé **ContentGenius**, une API SaaS de génération de contenu propulsée par ChatGPT. L'architecture respecte les bonnes pratiques Laravel avec:
 >
 > - Des **Controllers légers** qui délèguent aux Services
