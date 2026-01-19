@@ -1,0 +1,759 @@
+{
+    "info": {
+        "_postman_id": "content-genius-api",
+        "name": "ContentGenius API",
+        "description": "API SaaS de génération de contenu intelligent propulsée par ChatGPT",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000/api/v1",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Register",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/register",
+                            "host": ["{{base_url}}"],
+                            "path": ["auth", "register"]
+                        }
+                    }
+                },
+                {
+                    "name": "Login",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.data && jsonData.data.token) {",
+                                    "    pm.collectionVariables.set(\"token\", jsonData.data.token);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/login",
+                            "host": ["{{base_url}}"],
+                            "path": ["auth", "login"]
+                        }
+                    }
+                },
+                {
+                    "name": "Me",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/auth/me",
+                            "host": ["{{base_url}}"],
+                            "path": ["auth", "me"]
+                        }
+                    }
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/auth/logout",
+                            "host": ["{{base_url}}"],
+                            "path": ["auth", "logout"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Profile",
+            "item": [
+                {
+                    "name": "Get Profile",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/profile",
+                            "host": ["{{base_url}}"],
+                            "path": ["profile"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Profile",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"John Updated\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/profile",
+                            "host": ["{{base_url}}"],
+                            "path": ["profile"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Credits",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/profile/credits",
+                            "host": ["{{base_url}}"],
+                            "path": ["profile", "credits"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Articles (ChatGPT)",
+            "item": [
+                {
+                    "name": "Generate Article",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"topic\": \"Les meilleures pratiques pour optimiser les performances Laravel en 2024\",\n    \"tone\": \"professional\",\n    \"word_count\": 800\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/articles",
+                            "host": ["{{base_url}}"],
+                            "path": ["articles"]
+                        }
+                    }
+                },
+                {
+                    "name": "List Articles",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/articles",
+                            "host": ["{{base_url}}"],
+                            "path": ["articles"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Article",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/articles/:uuid",
+                            "host": ["{{base_url}}"],
+                            "path": ["articles", ":uuid"],
+                            "variable": [
+                                {
+                                    "key": "uuid",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rewrites (ChatGPT)",
+            "item": [
+                {
+                    "name": "Rewrite Text",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"text\": \"Notre entreprise est vraiment super et on fait plein de trucs cool pour nos clients.\",\n    \"tone\": \"professional\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/rewrites",
+                            "host": ["{{base_url}}"],
+                            "path": ["rewrites"]
+                        }
+                    }
+                },
+                {
+                    "name": "List Rewrites",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/rewrites",
+                            "host": ["{{base_url}}"],
+                            "path": ["rewrites"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Rewrite",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/rewrites/:uuid",
+                            "host": ["{{base_url}}"],
+                            "path": ["rewrites", ":uuid"],
+                            "variable": [
+                                {
+                                    "key": "uuid",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Summaries (ChatGPT)",
+            "item": [
+                {
+                    "name": "Summarize Text",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"text\": \"Laravel est un framework PHP open source très populaire pour le développement d'applications web. Il a été créé par Taylor Otwell et offre une syntaxe élégante et expressive. Laravel utilise le pattern MVC (Model-View-Controller) et propose de nombreuses fonctionnalités intégrées comme l'authentification, le routage, les sessions, la mise en cache et bien plus encore. Le framework dispose également d'un ORM puissant appelé Eloquent qui simplifie les interactions avec la base de données. Laravel est également connu pour son écosystème riche avec des outils comme Laravel Forge, Vapor et Nova.\",\n    \"format\": \"bullets\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/summaries",
+                            "host": ["{{base_url}}"],
+                            "path": ["summaries"]
+                        }
+                    }
+                },
+                {
+                    "name": "List Summaries",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/summaries",
+                            "host": ["{{base_url}}"],
+                            "path": ["summaries"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Summary",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/summaries/:uuid",
+                            "host": ["{{base_url}}"],
+                            "path": ["summaries", ":uuid"],
+                            "variable": [
+                                {
+                                    "key": "uuid",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Emails (ChatGPT)",
+            "item": [
+                {
+                    "name": "Generate Email",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"purpose\": \"Remercier un client pour sa commande et lui proposer une réduction de 10% sur son prochain achat\",\n    \"tone\": \"professional\",\n    \"recipient_name\": \"Marie Dupont\",\n    \"sender_name\": \"L'équipe ContentGenius\",\n    \"additional_info\": \"Le client a commandé un abonnement Premium\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/emails",
+                            "host": ["{{base_url}}"],
+                            "path": ["emails"]
+                        }
+                    }
+                },
+                {
+                    "name": "List Emails",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/emails",
+                            "host": ["{{base_url}}"],
+                            "path": ["emails"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Email",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/emails/:uuid",
+                            "host": ["{{base_url}}"],
+                            "path": ["emails", ":uuid"],
+                            "variable": [
+                                {
+                                    "key": "uuid",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Translations (ChatGPT)",
+            "item": [
+                {
+                    "name": "Translate Text",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"text\": \"Bonjour, comment allez-vous aujourd'hui ? J'espère que vous passez une excellente journée.\",\n    \"target_language\": \"en\",\n    \"source_language\": \"fr\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/translations",
+                            "host": ["{{base_url}}"],
+                            "path": ["translations"]
+                        }
+                    }
+                },
+                {
+                    "name": "List Translations",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/translations",
+                            "host": ["{{base_url}}"],
+                            "path": ["translations"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Translation",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/translations/:uuid",
+                            "host": ["{{base_url}}"],
+                            "path": ["translations", ":uuid"],
+                            "variable": [
+                                {
+                                    "key": "uuid",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Supported Languages",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/languages",
+                            "host": ["{{base_url}}"],
+                            "path": ["languages"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "History",
+            "item": [
+                {
+                    "name": "Get All History",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/history",
+                            "host": ["{{base_url}}"],
+                            "path": ["history"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get History (Filtered by Type)",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/history?type=article",
+                            "host": ["{{base_url}}"],
+                            "path": ["history"],
+                            "query": [
+                                {
+                                    "key": "type",
+                                    "value": "article"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Stats",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/history/stats",
+                            "host": ["{{base_url}}"],
+                            "path": ["history", "stats"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Content by UUID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/history/:uuid",
+                            "host": ["{{base_url}}"],
+                            "path": ["history", ":uuid"],
+                            "variable": [
+                                {
+                                    "key": "uuid",
+                                    "value": ""
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Utilities",
+            "item": [
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "http://localhost:8000/api/health",
+                            "host": ["http://localhost:8000"],
+                            "path": ["api", "health"]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
